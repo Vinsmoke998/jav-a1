@@ -35,7 +35,7 @@ public class Researcher {
 	 * @param title
 	 * @return
 	 */
-	public Publication getPublicationByTitle(String title) throws NullPointerException{
+	public Publication getPublicationByTitle(String title) throws NullPointerException {
 		for (Publication p : publications) {
 			if (p.getTitle().equals(title)) {
 				return p;
@@ -88,22 +88,8 @@ public class Researcher {
 	 * show all publications written by this researcher
 	 */
 	public void showPublications() {
-		System.out.println(
-				"Researcher: <" + this.id + ", \"" + this.name + "\", '" + this.gender + "', " + this.yob + ", [");
-		int count = publications.size();
-		for (Publication p : this.publications) {
-			if (p instanceof ResearchPaper && count != 1) {
-				System.out.println("     ResearchPaper: " + p.toString() + ",");
-			} else if (p instanceof ResearchPaper && count == 1) {
-				System.out.println("     ResearchPaper: " + p.toString() + "]>");
-			}
-			if (p instanceof JournalArticle && count != 1) {
-				System.out.println("     JournalArticle: " + p.toString() + ",");
-			} else if (p instanceof JournalArticle && count == 1) {
-				System.out.println("     JournalArticle: " + p.toString() + "]>");
-			}
-			count--;
-		}
+		List<Publication> publicationList = new ArrayList<>(publications); // convert set to list
+		showAll(publicationList);
 	}
 
 	/**
@@ -121,10 +107,14 @@ public class Researcher {
 	 */
 	public void showSortedPublications() {
 		List<Publication> sortedList = sort();
+		showAll(sortedList);
+	}
+
+	public void showAll(List<Publication> publications) {
 		System.out.println(
 				"Researcher: <" + this.id + ", \"" + this.name + "\", '" + this.gender + "', " + this.yob + ", [");
 		int count = publications.size();
-		for (Publication p : sortedList) {
+		for (Publication p : publications) {
 			// check instance type of object p
 			if (p instanceof ResearchPaper && count != 1) {
 				System.out.println("     ResearchPaper: " + p.toString() + ",");
