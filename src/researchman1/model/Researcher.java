@@ -1,5 +1,8 @@
 package researchman1.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,7 +35,7 @@ public class Researcher {
 	 * @param title
 	 * @return
 	 */
-	public Publication getPublicationByTitle(String title) {
+	public Publication getPublicationByTitle(String title) throws NullPointerException{
 		for (Publication p : publications) {
 			if (p.getTitle().equals(title)) {
 				return p;
@@ -90,25 +93,26 @@ public class Researcher {
 		int count = publications.size();
 		for (Publication p : this.publications) {
 			if (p instanceof ResearchPaper && count != 1) {
-				System.out.println("ResearchPaper: " + p.toString() + ",");
+				System.out.println("     ResearchPaper: " + p.toString() + ",");
 			} else if (p instanceof ResearchPaper && count == 1) {
-				System.out.println("ResearchPaper: " + p.toString());
+				System.out.println("     ResearchPaper: " + p.toString() + "]>");
 			}
 			if (p instanceof JournalArticle && count != 1) {
-				System.out.println("JournalArticle: " + p.toString() + ",");
+				System.out.println("     JournalArticle: " + p.toString() + ",");
 			} else if (p instanceof JournalArticle && count == 1) {
-				System.out.println("JournalArticle: " + p.toString());
+				System.out.println("     JournalArticle: " + p.toString() + "]>");
 			}
 			count--;
 		}
-		System.out.println("]>");
 	}
 
 	/**
 	 * sorts the publication in the descending order of the book identifier
 	 */
-	public void sort() {
-
+	public List<Publication> sort() {
+		List<Publication> publicationList = new ArrayList<>(publications); // convert set to list
+		Collections.sort(publicationList); // sort the publication list
+		return publicationList;
 	}
 
 	/**
@@ -116,7 +120,24 @@ public class Researcher {
 	 * the publication identifier
 	 */
 	public void showSortedPublications() {
-
+		List<Publication> sortedList = sort();
+		System.out.println(
+				"Researcher: <" + this.id + ", \"" + this.name + "\", '" + this.gender + "', " + this.yob + ", [");
+		int count = publications.size();
+		for (Publication p : sortedList) {
+			// check instance type of object p
+			if (p instanceof ResearchPaper && count != 1) {
+				System.out.println("     ResearchPaper: " + p.toString() + ",");
+			} else if (p instanceof ResearchPaper && count == 1) {
+				System.out.println("     ResearchPaper: " + p.toString() + "]>");
+			}
+			if (p instanceof JournalArticle && count != 1) {
+				System.out.println("     JournalArticle: " + p.toString() + ",");
+			} else if (p instanceof JournalArticle && count == 1) {
+				System.out.println("     JournalArticle: " + p.toString() + "]>");
+			}
+			count--;
+		}
 	}
 
 	public int getId() {

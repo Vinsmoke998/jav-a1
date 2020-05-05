@@ -5,12 +5,12 @@ package researchman1.model;
  * @author LeMinh
  *
  */
-public class Publication {
+public class Publication implements Comparable<Publication>{
 
 	private String doi; // Digital ObjectIdentifier
 	private String title;
 	private int yop; // abbreviation for year of publication
-
+	
 	public Publication(String doi, String title, int yop) {
 		super();
 		this.doi = doi;
@@ -45,6 +45,11 @@ public class Publication {
 	@Override
 	public String toString() {
 		return "<\"" + doi + "\", \"" + title + ", " + yop + ">";
+	}
+
+	@Override
+	public int compareTo(Publication o) {
+		return o.doi.compareTo(this.doi);
 	}
 
 }
